@@ -1,8 +1,8 @@
-const calculos = require('./Serviços/calculos');
-const inputs = require('./Serviços/inputs');
+const { InputDadosIMC: input } = require('./Serviços/inputs');
+const { CalcIMC: calculos } = require('./Serviços/calculos');
 const categoriaIMC = require('./Serviços/categoriaIMC');
 
-const DadosUser = inputs();
+const DadosUser = input();
 const ResultIMC = calculos(DadosUser).toFixed(2);
 const Categoria = categoriaIMC(ResultIMC);
 console.log(`IMC: ${ResultIMC}\nCategoria: ${Categoria}`);
