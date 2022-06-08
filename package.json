@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/irbds/node-js/issues"
   },
-  "homepage": "https://github.com/irbds/node-js#readme"
+  "homepage": "https://github.com/irbds/node-js#readme",
+  "dependencies": {
+    "readline-sync": "^1.4.10"
+  }
 }
