@@ -20,7 +20,10 @@ const InputDadosCar = () => {
   }
 }
 
+const InputNumUser = () => readlineSync.questionInt("Escolha um numero de 1 a 10\n");
+
 module.exports = {
   InputDadosIMC,
-  InputDadosCar
+  InputDadosCar,
+  InputNumUser
 } 
