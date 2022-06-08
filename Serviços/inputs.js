@@ -22,8 +22,19 @@ const InputDadosCar = () => {
 
 const InputNumUser = () => readlineSync.questionInt("Escolha um numero de 1 a 10\n");
 
+const InputContinue = () => readlineSync.keyInYN("deseja continuar?\n");
+
+const InputPick = () => readlineSync.questionInt(
+`Onde quer entrar?
+1-Calculo IMC
+2-Calculo Velocidade Media
+3-Jogo de advinhacao\n`
+);
+
 module.exports = {
   InputDadosIMC,
   InputDadosCar,
-  InputNumUser
+  InputNumUser,
+  InputContinue,
+  InputPick
 } 
