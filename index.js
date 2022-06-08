@@ -8,10 +8,10 @@ switch (input()) {
     imc();
     break;
   case 2:
-    sorteio();
+    velMedia();
     break;
   case 3:
-    velMedia();
+    sorteio();
     break;
   default:
     console.log('escolha um numero entre 1 e 3');
