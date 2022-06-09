@@ -13,6 +13,6 @@ const SumMult = (a, b, c) => {
   return calculo;
 }
 
-SumMult(50,2,3)
+SumMult(Math.floor(Math.random() * 100 + 1), Math.floor(Math.random() * 100 + 1), Math.floor(Math.random() * 100 + 1))
   .then(result => console.log(result))
   .catch(error => console.log(`${error}`));
