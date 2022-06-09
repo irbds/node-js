@@ -11,6 +11,10 @@ async function ReadFile() {
   }
 }
 
+async function WriteFile(pwd_file, newFile) {
+  fs.writeFile('./simpsons.json', 'ola', 'utf-8')
+}
+
 async function ShowFile(filePWD) {
   try{
     const result = await ReadFile();
@@ -34,12 +38,18 @@ async function FilterById(idPersonagem) {
   }
 }
 
-async function main() {
-  const showFile = await ShowFile();
-  showFile.forEach(acc => console.log(acc));
+async function DeletPerso(...id) {
+  console.log(id);
+}
 
-  const showFileId = await FilterById(1);
-  console.log(showFileId);
+async function main() {
+  // const showFile = await ShowFile();
+  // showFile.forEach(acc => console.log(acc));
+
+  // const showFileId = await FilterById(1);
+  // console.log(showFileId);
+
+  console.log(WriteFile());
 }
 
 main();
