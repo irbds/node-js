@@ -13,6 +13,16 @@ const SumMult = (a, b, c) => {
   return calculo;
 }
 
-SumMult(Math.floor(Math.random() * 100 + 1), Math.floor(Math.random() * 100 + 1), Math.floor(Math.random() * 100 + 1))
-  .then(result => console.log(result))
-  .catch(error => console.log(`${error}`));
+const Randomizer = () => Math.floor(Math.random() * 100 + 1);
+
+const numRandom = async () => {
+  const numRandom = Array.from({ length: 3}).map(Randomizer);
+  try{
+    const result = await SumMult(...numRandom)
+    console.log(result);
+  } catch (error) {
+    console.log(`${error}`);
+  }
+}
+
+numRandom();
