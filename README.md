@@ -1,4 +1,4 @@
-# MySQL-22.01
+# MySQL-22.02
 
 ## Lista de exercicios
 
