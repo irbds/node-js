@@ -1,17 +1,45 @@
 const fs = require('fs').promises;
 
-async function FilterById(idPersonagem) {
-  
-}
-
-async function ReadFile(arquivoALer, idPersonagem) {
+async function ReadFile() {
   try{
-    const arquivo = await fs.readFile(arquivoALer, 'utf-8');
+    const arquivo = await fs.readFile('./simpsons.json', 'utf-8');
     const arquivoJson = JSON.parse(arquivo);
-    (idPersonagem !== undefined) ? FilterById(idPersonagem) : console.table(arquivoJson);
+
+    return arquivoJson;
   } catch (error) {
     console.log('nao foi possivel ler o arquivo');
   }
 }
 
-ReadFile('./simpsons.json', 1);
+async function ShowFile(filePWD) {
+  try{
+    const result = await ReadFile();
+    const arrayFile = result.map((acc) => `${acc.id} - ${acc.name}`);
+
+    return arrayFile;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function FilterById(idPersonagem) {
+  try{
+    const result = await ReadFile();
+    const filter = result.find((acc) => acc.id === idPersonagem);
+    if (filter === undefined) throw "id não encontrado";
+
+    return (`${filter.id} - ${filter.name}`);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function main() {
+  const showFile = await ShowFile();
+  showFile.forEach(acc => console.log(acc));
+
+  const showFileId = await FilterById(1);
+  console.log(showFileId);
+}
+
+main();
