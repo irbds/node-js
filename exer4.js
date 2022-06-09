@@ -11,8 +11,13 @@ async function ReadFile() {
   }
 }
 
-async function WriteFile(pwd_file, newFile) {
-  fs.writeFile('./simpsons.json', 'ola', 'utf-8')
+async function WriteFile(newFile, id) {
+  try{
+    fs.writeFile('./simpsons.json', JSON.stringify(newFile), 'utf-8')
+    return (`apagado personagens com id: ${id}`)
+  } catch (error) {
+    console.log('não foi possivel gravar o arquivo com a nova informacao');
+  }
 }
 
 async function ShowFile(filePWD) {
@@ -34,22 +39,30 @@ async function FilterById(idPersonagem) {
 
     return (`${filter.id} - ${filter.name}`);
   } catch (error) {
-    console.log(error);
+    return error;
   }
 }
 
 async function DeletPerso(...id) {
-  console.log(id);
+  const readFile = await ReadFile();
+  let newArray = readFile;
+
+  readFile.map((all) => {
+    if(id.some((delet) => delet === all.id)) newArray = newArray.filter((acc) => acc.id !== all.id);
+  });
+
+  return sendDelet = await WriteFile(newArray, id);
 }
 
 async function main() {
-  // const showFile = await ShowFile();
-  // showFile.forEach(acc => console.log(acc));
+  const showFile = await ShowFile();
+  showFile.forEach(acc => console.log(acc));
 
-  // const showFileId = await FilterById(1);
-  // console.log(showFileId);
+  const showFileId = await FilterById(1);
+  console.log(showFileId);
 
-  console.log(WriteFile());
+  const DeletPerson = await DeletPerso(1, 2, 3);
+  console.log(DeletPerson);
 }
 
 main();
