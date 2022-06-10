@@ -1,8 +1,8 @@
 const fs = require('fs').promises;
 
-async function ReadFile() {
+async function ReadFile(arquivo) {
   try{
-    const arquivo = await fs.readFile('./simpsons.json', 'utf-8');
+    const arquivo = await fs.readFile(arquivo, 'utf-8');
     const arquivoJson = JSON.parse(arquivo);
 
     return arquivoJson;
@@ -22,7 +22,7 @@ async function WriteFile(newFile, id) {
 
 async function ShowFile(filePWD) {
   try{
-    const result = await ReadFile();
+    const result = await ReadFile('./simpsons.json');
     const arrayFile = result.map((acc) => `${acc.id} - ${acc.name}`);
 
     return arrayFile;
@@ -33,7 +33,7 @@ async function ShowFile(filePWD) {
 
 async function FilterById(idPersonagem) {
   try{
-    const result = await ReadFile();
+    const result = await ReadFile('./simpsons.json');
     const filter = result.find((acc) => acc.id === idPersonagem);
     if (filter === undefined) throw "id não encontrado";
 
@@ -44,18 +44,22 @@ async function FilterById(idPersonagem) {
 }
 
 async function DeletPerso(...id) {
-  const readFile = await ReadFile();
-  let newArray = readFile;
-
-  readFile.map((all) => {
-    newArray = newArray.filter((acc) => !id.includes(acc.id));
-  });
-
-  return sendDelet = await WriteFile(newArray, id);
+  try{
+    const readFile = await ReadFile('./simpsons.json');
+    let newArray = readFile;
+  
+    readFile.map((all) => {
+      newArray = newArray.filter((acc) => !id.includes(acc.id));
+    });
+  
+    return sendDelet = await WriteFile(newArray, id);
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 async function CreatFile(...id) {
-  const readFile = await ReadFile();
+  const readFile = await ReadFile('./simpsons.json');
   let newArray = readFile;
 
   newArray = newArray.filter((acc) => id.includes(acc.id));
@@ -63,6 +67,10 @@ async function CreatFile(...id) {
   fs.writeFile('./simpsonFamily.json', JSON.stringify(newArray), 'utf-8')
 
   return newArray;
+}
+
+function AddNewPers(newPers) {
+  
 }
 
 async function main() {
@@ -75,8 +83,10 @@ async function main() {
   // const DeletPerson = await DeletPerso(10, 6);
   // console.log(DeletPerson);
 
-  const creatFile = await CreatFile(1, 2, 3, 4);
-  console.log(creatFile);
+  // const creatFile = await CreatFile(1, 2, 3, 4);
+  // console.log(creatFile);
+
+
 }
 
 main();
