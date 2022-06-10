@@ -48,21 +48,35 @@ async function DeletPerso(...id) {
   let newArray = readFile;
 
   readFile.map((all) => {
-    if(id.some((delet) => delet === all.id)) newArray = newArray.filter((acc) => acc.id !== all.id);
+    newArray = newArray.filter((acc) => !id.includes(acc.id));
   });
 
   return sendDelet = await WriteFile(newArray, id);
 }
 
+async function CreatFile(...id) {
+  const readFile = await ReadFile();
+  let newArray = readFile;
+
+  newArray = newArray.filter((acc) => id.includes(acc.id));
+
+  fs.writeFile('./simpsonFamily.json', JSON.stringify(newArray), 'utf-8')
+
+  return newArray;
+}
+
 async function main() {
-  const showFile = await ShowFile();
-  showFile.forEach(acc => console.log(acc));
+  // const showFile = await ShowFile();
+  // showFile.forEach(acc => console.log(acc));
 
-  const showFileId = await FilterById(1);
-  console.log(showFileId);
+  // const showFileId = await FilterById(1);
+  // console.log(showFileId);
 
-  const DeletPerson = await DeletPerso(1, 2, 3);
-  console.log(DeletPerson);
+  // const DeletPerson = await DeletPerso(10, 6);
+  // console.log(DeletPerson);
+
+  const creatFile = await CreatFile(1, 2, 3, 4);
+  console.log(creatFile);
 }
 
 main();
