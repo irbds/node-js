@@ -13,7 +13,7 @@ async function ReadFile(file) {
 
 async function WriteFile(file, data, id) {
   try{
-    fs.writeFile(file, JSON.stringify(data), 'utf-8');
+    await fs.writeFile(file, JSON.stringify(data), 'utf-8');
     if(id) return (`apagado personagens com id: ${id}`);
     return (`Gravado com sucesso`);
   } catch (error) {
@@ -44,16 +44,16 @@ async function FilterById(idPersonagem) {
   }
 }
 
-async function DeletPerso(...id) {
+async function DeletPerso(file, ...id) {
   try{
-    const readFile = await ReadFile('./simpsons.json');
+    const readFile = await ReadFile(file);
     let newArray = readFile;
   
     readFile.map((all) => {
       newArray = newArray.filter((acc) => !id.includes(acc.id));
     });
   
-    return await WriteFile('./simpsons.json', newArray, id);
+    return await WriteFile(file, newArray, id);
   } catch (error) {
     console.log(error);
   }
@@ -83,6 +83,19 @@ async function AddNewPers(newPers) {
   }
 }
 
+async function TradePerson(file, newPerson, id) {
+  try {
+    let newArray = await ReadFile(file);
+    newArray = newArray.filter((acc) => id !== acc.id);
+    const newPers = [...newArray, newPerson];
+    console.log(newPers);
+  
+    return await WriteFile(file, newPers);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 async function main() {
   // const showFile = await ShowFile();
   // showFile.forEach(acc => console.log(acc));
@@ -90,14 +103,17 @@ async function main() {
   // const showFileId = await FilterById(3);
   // console.log(showFileId);
 
-  // const DeletPerson = await DeletPerso(10, 6);
+  // const DeletPerson = await DeletPerso('./simpsons.json', 10, 6);
   // console.log(DeletPerson);
 
   // const creatFile = await CreatFile(1);
   // console.log(creatFile);
 
-  const addNewPers = await AddNewPers({ "id": 8, "name": "Nelson Muntz" });
-  console.log(addNewPers);
+  // const addNewPers = await AddNewPers({ "id": 8, "name": "Nelson Muntz" });
+  // console.log(addNewPers);
+
+  const tradePerson = await TradePerson('./simpsonFamily.json', { "id": 5, "name": "Maggie Simpson" }, 8);
+  console.log(tradePerson);
 }
 
 main();
