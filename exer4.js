@@ -53,25 +53,34 @@ async function DeletPerso(...id) {
       newArray = newArray.filter((acc) => !id.includes(acc.id));
     });
   
-    return sendDelet = await WriteFile('./simpsons.json', newArray, id);
+    return await WriteFile('./simpsons.json', newArray, id);
   } catch (error) {
     console.log(error);
   }
 }
 
 async function CreatFile(...id) {
-  const readFile = await ReadFile('./simpsons.json');
-  let newArray = readFile;
-
-  newArray = newArray.filter((acc) => id.includes(acc.id));
-
-  return WriteFile('./simpsonFamily.json', newArray);
-
-  return newArray;
+  try{
+    const readFile = await ReadFile('./simpsons.json');
+    let newArray = readFile;
+  
+    newArray = newArray.filter((acc) => id.includes(acc.id));
+  
+    return await WriteFile('./simpsonFamily.json', newArray);
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 async function AddNewPers(newPers) {
-  const readFile = await ReadFile('./simpsonFamily.json');
+  try {
+    const readFile = await ReadFile('./simpsonFamily.json');
+    const addPerson = [...readFile, newPers];
+
+    return await WriteFile('./simpsonFamily.json', addPerson);
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 async function main() {
@@ -87,8 +96,8 @@ async function main() {
   // const creatFile = await CreatFile(1);
   // console.log(creatFile);
 
-  // const addNewPers = await AddNewPers();
-  // console.log(addNewPers);
+  const addNewPers = await AddNewPers({ "id": 8, "name": "Nelson Muntz" });
+  console.log(addNewPers);
 }
 
 main();
