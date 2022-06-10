@@ -1,8 +1,8 @@
 const fs = require('fs').promises;
 
-async function ReadFile(arquivo) {
+async function ReadFile(file) {
   try{
-    const arquivo = await fs.readFile(arquivo, 'utf-8');
+    const arquivo = await fs.readFile(file, 'utf-8');
     const arquivoJson = JSON.parse(arquivo);
 
     return arquivoJson;
@@ -11,10 +11,11 @@ async function ReadFile(arquivo) {
   }
 }
 
-async function WriteFile(newFile, id) {
+async function WriteFile(file, data, id) {
   try{
-    fs.writeFile('./simpsons.json', JSON.stringify(newFile), 'utf-8')
-    return (`apagado personagens com id: ${id}`)
+    fs.writeFile(file, JSON.stringify(data), 'utf-8');
+    if(id) return (`apagado personagens com id: ${id}`);
+    return (`Gravado com sucesso`);
   } catch (error) {
     console.log('não foi possivel gravar o arquivo com a nova informacao');
   }
@@ -52,7 +53,7 @@ async function DeletPerso(...id) {
       newArray = newArray.filter((acc) => !id.includes(acc.id));
     });
   
-    return sendDelet = await WriteFile(newArray, id);
+    return sendDelet = await WriteFile('./simpsons.json', newArray, id);
   } catch (error) {
     console.log(error);
   }
@@ -64,29 +65,30 @@ async function CreatFile(...id) {
 
   newArray = newArray.filter((acc) => id.includes(acc.id));
 
-  fs.writeFile('./simpsonFamily.json', JSON.stringify(newArray), 'utf-8')
+  return WriteFile('./simpsonFamily.json', newArray);
 
   return newArray;
 }
 
-function AddNewPers(newPers) {
-  
+async function AddNewPers(newPers) {
+  const readFile = await ReadFile('./simpsonFamily.json');
 }
 
 async function main() {
   // const showFile = await ShowFile();
   // showFile.forEach(acc => console.log(acc));
 
-  // const showFileId = await FilterById(1);
+  // const showFileId = await FilterById(3);
   // console.log(showFileId);
 
   // const DeletPerson = await DeletPerso(10, 6);
   // console.log(DeletPerson);
 
-  // const creatFile = await CreatFile(1, 2, 3, 4);
+  // const creatFile = await CreatFile(1);
   // console.log(creatFile);
 
-
+  // const addNewPers = await AddNewPers();
+  // console.log(addNewPers);
 }
 
 main();
