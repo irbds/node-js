@@ -29,3 +29,13 @@ describe('testes para escrita em arquivo', () => {
     });
   });
 })
+
+describe('chamada de funcao sem argumentos', () => {
+  describe('verifica se quando nao passa parametro para a funcao', () => {
+    it('retorna um erro', async () => {
+      const resposta = await writeFile();
+
+      expect(resposta).to.be.equal('funcao chamada sem argumentos');
+    });
+  })
+})
